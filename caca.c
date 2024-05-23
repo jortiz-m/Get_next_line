@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   caca.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:52:27 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/05/23 11:21:22 by jortiz-m         ###   ########.fr       */
+/*   Created: 2024/05/23 10:42:51 by jortiz-m          #+#    #+#             */
+/*   Updated: 2024/05/23 10:50:56 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFFER_SIZE 1
+char 	buffer
+char	*str;
+int		cont;
 
-# include <stdio.h>
-# include <fcntl.h>
+cont = 1;
 
-char *get_next_line(int fd)
+while(read(fd, &buffer, 1) != 0)
+{
+	
+}
 
-#endif
+str = malloc(BYTES_BUFFER * )
+read(fd, &buffer, 1);
+str[i] = buffer;

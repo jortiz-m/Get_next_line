@@ -3,39 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jortiz-m <jortiz-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/05/17 12:12:38 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:27:05 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_stash(char *buffer, char *str) //utiliamos el buffer para crear str
+/*char	*ft_stash(fd) //lee caracter y lo devuelve
 {
-	int	i;
+	char 	*temp;
+	int		i;
 
 	i = 0;
-	str = malloc((buffer) * sizeof(char));
-	while (str[i] != '\0' && str[i] != '\n')
-	{
-		str[i] == buffer; //el buffer lo quiero en el str
-		i++;
-	}
-	return (&str);
-}
+	temp = malloc(2 * sizeof(char));
+	read(fd, &temp, 1);
+	return (&temp);
+}*/
 
-char *ft_reserve(char *str) //crea el str completo, en cada vuelta añade
+char *ft_reserve(char c) //crea el str completo, en cada vuelta añade
 {
-	int	i;
+	char	*str; //mi str final
+	int		i;
 
+	str = malloc()
 	i = 0;
 	while (str[i] == '\0') //colocarme en el último elemento del string
 		i++;
-	str[i] = *ft_stash
-	i++;
-	
+	str[i] = temp;
+	i++;	
 }
 
 void	ft_freestash(char *str) //liberar la memoria en cada vuelta
@@ -44,23 +42,23 @@ void	ft_freestash(char *str) //liberar la memoria en cada vuelta
 
 char	*get_next_line(int fd)
 {
-	char	*str; //string donde quiero almacenar lo que estoy leyendo
-	size_t	bytesread; //número de elementos por vuelta leídos
-	char	*buffer; //donde guardo mientras lo que se va leyendo
+	char	*str; //string final
+	char	*buffer;
+	int		element;
+	int		i;
 
-	bytesread = read(fd, buffer, BYTES_BUFFER);
-	buffer = malloc((bytesread + 1) * sizeof(char));
-	if (read == -1)
-		return (-1);
-	while (bytesread != 0) //lee y devuelve un número el read
+	i = 0;
+	element = read(fd, buffer, BUFFER_SIZE)
+	if (element != 0) //lee y devuelve un número el read
 	{
-		while (bytesread > 0 && bytesread < 10)
+		while (buffer[i] != '\0')
 		{
-			ft_stash(&buffer, str); //para volcar la información
-			ft_reverse(str); //crear el srting final que devolvemos
-			bytesread--;
+			ft_reserve(buffer[i]); //crear el srting final que devolvemos
+			i++;
 		}
 	ft_freestash() //liberamos el buffer para la siguiente lectura
 	}
+	else
+		return (-1);
 	return (ft_reserve);
 }
