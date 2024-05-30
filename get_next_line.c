@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/05/28 12:41:27 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/05/30 09:18:40 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,17 @@ char	*ft_rest(char *buffer, int element)
 {
 	static char	*rest;
 	int			start;
+	int			counter;
 
+	counter = 0;
 	rest = malloc(((element - ft_len(buffer) + 1) * sizeof(char)));
 	if (rest == NULL)
 		return (NULL);
 	start = buffer[ft_len(buffer) + 1];
-	while (start < element)
+	while ((start + counter) < element)
 	{
-		rest[start] = buffer[start];
-		start++;
+		rest[counter] = buffer[start + counter];
+		counter++;
 	}
 	return (rest);
 }
@@ -66,18 +68,23 @@ char	*get_next_line(int fd)
 	static char		*rest;
 
 	i = 0;
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (buffer == NULL)
-		return (NULL);
-	element = read(fd, buffer, BUFFER_SIZE);
-	if (element < 0)
+	if (rest != '\0')
+		ft_strjoin(str, rest);
+	while (buffer != '\n')
 	{
-		free(buffer);
-		return (NULL);
+		buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+		if (buffer == NULL)
+			return (NULL);
+		element = read(fd, buffer, BUFFER_SIZE);
+		if (element < 0)
+		{
+			free(buffer);
+			return (NULL);
+		}
+		if (ft_len(buffer) < element)
+			rest = ft_rest(buffer, element);
+		str = ft_createstr(buffer, ft_len(buffer));
 	}
-	if (ft_len(buffer) < element)
-		rest = ft_rest(buffer, element);
-	str = ft_createstr(buffer, element);
 	free(buffer);
 	return (str);
 }

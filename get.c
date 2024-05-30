@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:52:27 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/05/29 10:24:43 by jortiz-m         ###   ########.fr       */
+/*   Created: 2024/05/30 09:13:35 by jortiz-m          #+#    #+#             */
+/*   Updated: 2024/05/30 09:17:20 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFFER_SIZE 4
+char	*get_next_line(int fd)
+{
+	char	*rest;
+	char	*str;
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <fcntl.h>
-
-char	*get_next_line(int fd);
-
-#endif
+	if (rest != '\0')
+	{
+		ft_strjoin(str, rest);
+	}
+	else
+		while (buffer[i] != '\n')
+			read;
+}
