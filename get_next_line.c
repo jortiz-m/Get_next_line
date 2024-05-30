@@ -6,11 +6,40 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/05/30 09:18:40 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:43:45 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+	int		i;
+	int		j;
+	char	lends3;
+
+	lends3 = (ft_strlen(s1) + ft_strlen(s2));
+	str = (char *)malloc ((lends3 + 1) * sizeof(char));
+	i = 0;
+	j = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	if (!str)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+	{
+		str[i + j] = s2[j];
+		j++;
+	}
+	str[(i + j)] = '\0';
+	return (str);
+}
 
 size_t	ft_len(char *str)
 {
@@ -24,7 +53,7 @@ size_t	ft_len(char *str)
 
 char	*ft_rest(char *buffer, int element)
 {
-	static char	*rest;
+	char	*rest;
 	int			start;
 	int			counter;
 
@@ -41,50 +70,72 @@ char	*ft_rest(char *buffer, int element)
 	return (rest);
 }
 
-char	*ft_createstr(char *temp, size_t len)
+char	*ft_createline(char *buffer, size_t len)
 {
-	char	*str;
+	char	*line;
 	int		i;
 
 	i = 0;
-	str = malloc((len + 1) * sizeof(char));
-	if (str == NULL)
+	line = malloc((len + 1) * sizeof(char));
+	if (line == NULL)
 		return (NULL);
 	while (i < len)
 	{
-		str[i] = temp[i];
+		line[i] = temp[i];
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	line[i] = '\0';
+	return (line);
+}
+
+char	*ft_readbuffer(char *str)
+{
+	int			element;
+	static char	*buffer;
+	int			i;
+	char		*line;
+
+	i = 0;
+	
+	buffer = malloc(1 * sizeof(char));
+	if (buffer == NULL)
+			free(buffer);
+			return (NULL);
+	element = read(fd, buffer, BUFFER_SIZE);
+	while (element > 0)
+		while (buffer[i] != '\n' || buffer[i] != '\0')
+		{
+			if (buffer[i] == '\n')
+				return (line = ft_createline(buffer, ft_len(buffer)));
+			i++;		
+		}
+		read()
+		        
+
+
+
+
+	
 }
 
 char	*get_next_line(int fd)
 {
 	char			*str;
-	char			*buffer;
+	static char		*buffer;
 	int				element;
 	int				i;
-	static char		*rest;
+	char			*rest;
 
 	i = 0;
-	if (rest != '\0')
-		ft_strjoin(str, rest);
-	while (buffer != '\n')
-	{
-		buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-		if (buffer == NULL)
-			return (NULL);
-		element = read(fd, buffer, BUFFER_SIZE);
-		if (element < 0)
-		{
-			free(buffer);
-			return (NULL);
-		}
-		if (ft_len(buffer) < element)
-			rest = ft_rest(buffer, element);
-		str = ft_createstr(buffer, ft_len(buffer));
+	if (rest != '\0') //si hay resto, une el resto con el actual
+		str = ft_strjoin(rest, str);
+	while (str[i] != '\n' || str[i] != '\0') //comprobar si he llegado al final de la línea
+	{	
+		ft_readbuffer(str);
+		i++;
 	}
+	if (ft_len(buffer) < element) //si lo que tenemos nos sobra, crea rest
+		rest = ft_rest(buffer, element);
 	free(buffer);
 	return (str);
 }
