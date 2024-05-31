@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/05/30 10:43:45 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/05/31 09:16:35 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ size_t	ft_len(char *str)
 
 char	*ft_rest(char *buffer, int element)
 {
-	char	*rest;
+	char		*rest;
 	int			start;
 	int			counter;
 
@@ -110,12 +110,6 @@ char	*ft_readbuffer(char *str)
 			i++;		
 		}
 		read()
-		        
-
-
-
-
-	
 }
 
 char	*get_next_line(int fd)
