@@ -6,132 +6,133 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/05/31 09:16:35 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:48:16 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_strlen(char *str)
 {
-	char	*str;
-	int		i;
-	int		j;
-	char	lends3;
-
-	lends3 = (ft_strlen(s1) + ft_strlen(s2));
-	str = (char *)malloc ((lends3 + 1) * sizeof(char));
-	i = 0;
-	j = 0;
-	if (!s1 || !s2)
-		return (NULL);
-	if (!str)
-		return (NULL);
-	while (s1[i] != '\0')
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2[j] != '\0')
-	{
-		str[i + j] = s2[j];
-		j++;
-	}
-	str[(i + j)] = '\0';
-	return (str);
-}
-
-size_t	ft_len(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] != '\n' && str[i])
-		i++;
-	return (i);
-}
-
-char	*ft_rest(char *buffer, int element)
-{
-	char		*rest;
-	int			start;
-	int			counter;
+	int	counter;
 
 	counter = 0;
-	rest = malloc(((element - ft_len(buffer) + 1) * sizeof(char)));
-	if (rest == NULL)
-		return (NULL);
-	start = buffer[ft_len(buffer) + 1];
-	while ((start + counter) < element)
-	{
-		rest[counter] = buffer[start + counter];
+	while (str[counter] != '\0')
 		counter++;
-	}
-	return (rest);
+	return (counter);
 }
 
-char	*ft_createline(char *buffer, size_t len)
+int	ft_check(char *buffer)
 {
-	char	*line;
-	int		i;
+	int	i;
 
 	i = 0;
-	line = malloc((len + 1) * sizeof(char));
-	if (line == NULL)
-		return (NULL);
-	while (i < len)
+	while (buffer[i] != '\0')
 	{
-		line[i] = temp[i];
+		if (buffer[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+char	*ft_createline(char *buffer)
+{
+	int		i;
+	char	*line;
+
+	
+	i = 0;
+	while (buffer[i] != '\n')
+		i++;
+	line = malloc((i + 1) * sizeof(char));
+	i = 0;
+	while (buffer[i] != '\n')
+	{
+		line[i] = buffer[i];
 		i++;
 	}
 	line[i] = '\0';
 	return (line);
 }
-
-char	*ft_readbuffer(char *str)
+char	*ft_read(int fd)
 {
-	int			element;
-	static char	*buffer;
-	int			i;
-	char		*line;
+	char	*buffer;
+	int		element;
 
-	i = 0;
-	
-	buffer = malloc(1 * sizeof(char));
-	if (buffer == NULL)
-			free(buffer);
-			return (NULL);
+	buffer = malloc(BUFFER_SIZE * sizeof(char));
+	if	(!buffer)
+		return (NULL);
 	element = read(fd, buffer, BUFFER_SIZE);
-	while (element > 0)
-		while (buffer[i] != '\n' || buffer[i] != '\0')
-		{
-			if (buffer[i] == '\n')
-				return (line = ft_createline(buffer, ft_len(buffer)));
-			i++;		
-		}
-		read()
+	buffer[BUFFER_SIZE] = '\0';
+	return (buffer);
 }
 
-char	*get_next_line(int fd)
+char	*ft_rest(char *buffer)
 {
-	char			*str;
-	static char		*buffer;
-	int				element;
-	int				i;
-	char			*rest;
+	int		i;
+	int		j;
+	char	*rest;
 
 	i = 0;
-	if (rest != '\0') //si hay resto, une el resto con el actual
-		str = ft_strjoin(rest, str);
-	while (str[i] != '\n' || str[i] != '\0') //comprobar si he llegado al final de la línea
-	{	
-		ft_readbuffer(str);
+	while (buffer[i] != '\n')
+		i++;
+	i++;
+	j = 0;
+	while (buffer[i] != '\0')
+		j++;
+	rest = malloc((j + 1) * sizeof(char));
+	if (!rest)
+		return (NULL);
+	j = 0;
+	while (buffer[i] != '\0')
+	{
+		rest[j] = buffer[i + j];
+		j++;
+	}
+	rest[j] = '\0';
+	free(buffer);
+	return (rest);
+}
+
+char	*ft_join(char *buffer, char *new)
+{
+	char	*newbuffer;
+	int		i;
+	int		j;
+
+	i = 0;
+	newbuffer = malloc(ft_strlen(buffer) + ft_strlen(new) * sizeof(char));
+	while (buffer[i])
+	{
+		newbuffer[i] = buffer[i];
 		i++;
 	}
-	if (ft_len(buffer) < element) //si lo que tenemos nos sobra, crea rest
-		rest = ft_rest(buffer, element);
+	j = 0;
+	while (new)
+	{
+		newbuffer[i + j] = new[j];
+		j++;
+	}
 	free(buffer);
-	return (str);
+	free(new);
+	return (newbuffer);
+}
+char	*get_next_line(int fd)
+{
+	static char *buffer;
+	char		*line;
+
+	buffer = ft_read(fd);
+	while (ft_check(buffer) == 0)
+		buffer = ft_join(buffer, ft_read(fd));
+		if (ft_null(buffer) == 1)
+			
+	if (ft_check(buffer) == 1)
+	{
+		line = ft_createline(buffer);
+		buffer = ft_rest(buffer);
+	}
+	return (line);
 }
 
 int	main(void)
@@ -140,8 +141,6 @@ int	main(void)
 	char	*line;
 
 	fd = open("caca.txt", O_RDONLY);
-	line = get_next_line(fd);
-	printf("%s\n", line);
 	line = get_next_line(fd);
 	printf("%s\n", line);
 	return (0);
