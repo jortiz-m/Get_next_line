@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/04 12:03:40 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:47:48 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,17 @@ char	*ft_rest(char *buffer)
 	int		j;
 	char	*rest;
 
-	i = ft_findstr(buffer, '\n');
+	i = (ft_findstr(buffer, '\n') + 1);
 	j = 0;
 	while (buffer[j] != '\0')
 		j++;
 	while (j > i)
 	{
-		rest = malloc((j + 1) * sizeof(char));
+		rest = malloc((j - i) * sizeof(char));
 		if (!rest)
 			return (NULL);
 		j = 0;
-		while (buffer[i] != '\0')
+		while (buffer[i + j] != '\0')
 		{
 			rest[j] = buffer[i + j];
 			j++;
@@ -118,19 +118,25 @@ char	*ft_join(char *buffer, char *new)
 	int		j;
 
 	i = 0;
-	newbuffer = (char *)malloc((ft_strlen(buffer) + ft_strlen(new) + 1) * sizeof(char));
+	newbuffer = malloc((ft_strlen(buffer) + ft_strlen(new) + 1) * sizeof(char));
 	if (!newbuffer)
 		return (NULL);
 	if (buffer)
 	{
 		while (buffer[i])
-			newbuffer[i] = buffer[i++];
+		{
+			newbuffer[i] = buffer[i];
+			i++;
+		}
 	}
 	j = 0;
 	if (new)
 	{
 		while (new[j] != '\0')
-			newbuffer[i + j] = new[j++];
+		{
+			newbuffer[i + j] = new[j];
+			j++;
+		}
 	}
 	free(buffer);
 	free(new);
@@ -145,19 +151,16 @@ char	*get_next_line(int fd)
 
 	
 	buffer = ft_join(buffer, ft_read(fd));
-	if (ft_strlen(buffer) == BUFFER_SIZE)
+	if (ft_strlen(buffer) > BUFFER_SIZE)
 	{
 		while (ft_check(buffer) == 0)
 		{
-			temp = ft_join(temp, buffer);
-			free(buffer);
-			buffer = temp;
+			buffer = ft_join(buffer, ft_read(fd));
 		}
 		if (ft_check(buffer) == 1)
 		{
 			line = ft_createline(buffer);
 			temp = ft_rest(buffer);
-			free(buffer);
 			buffer = temp;
 			return (line);	
 		}
@@ -174,5 +177,15 @@ int	main(void)
 	fd = open("caca.txt", O_RDONLY);
 	line = get_next_line(fd);
 	printf("%s\n", line);
+	free(line);
+	line = get_next_line(fd);
+	printf("%s\n", line);
+	free(line);
+	line = get_next_line(fd);
+	printf("%s\n", line);
+	free(line);
+	line = get_next_line(fd);
+	printf("%s\n", line);
+	free(line);
 	return (0);
 }
