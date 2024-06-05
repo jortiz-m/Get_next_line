@@ -6,9 +6,10 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/05 10:16:52 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/05 12:40:30 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "get_next_line.h"
 
@@ -112,15 +113,7 @@ char	*ft_rest(char *buffer)
 	}
 	
 }
-char	*ft_createbuffer(char *buffer)
-{
-	while (buffer[i])
-	{
-		newbuffer[i] = buffer[i];
-		i++;
-	}
-	newbuffer[ft_strlen(buffer)] = '\0';
-}
+
 char	*ft_createnew(char *new)
 {
 	char	*newbuffer;
@@ -148,14 +141,18 @@ char	*ft_join(char *buffer, char *new)
 	if (!newbuffer)
 		return (NULL);
 	if (buffer)
-		ft_createbuffer(buffer);
+		while (buffer[i])
+	{
+		newbuffer[i] = buffer[i];
+		i++;
+	}
+	newbuffer[ft_strlen(buffer)] = '\0';
 	j = 0;
 	if (new)
 		ft_createnew(new);
 	newbuffer[i + j] = '\0';
 	free(buffer);
-	free(new);
-	return (newbuffer);
+	return (free(new), newbuffer);
 }
 char	*get_next_line(int fd)
 {
@@ -166,10 +163,7 @@ char	*get_next_line(int fd)
 	
 	buffer = ft_join(buffer, ft_read(fd));
 	if (buffer == NULL)
-	{
-		free(buffer);
-		return (NULL);
-	}
+		return (free(buffer), NULL);
 	if (ft_strlen(buffer) >= BUFFER_SIZE)
 	{
 		while (ft_check(buffer) == 0)
@@ -180,8 +174,7 @@ char	*get_next_line(int fd)
 		{
 			line = ft_createline(buffer);
 			temp = ft_rest(buffer);
-			buffer = temp;
-			return (line);	
+			return (buffer = temp, line);	
 		}
 	}
 	else
