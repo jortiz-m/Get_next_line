@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/04 12:47:48 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:16:52 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,12 @@ char	*ft_read(int fd)
 	char	*buffer;
 	int		element;
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = malloc(BUFFER_SIZE * sizeof(char));
 	if	(!buffer)
 		return (NULL);
 	element = read(fd, buffer, BUFFER_SIZE);
+	if (element == 0)
+		return (0);
 	buffer[element] = '\0';
 	return (buffer);
 }
@@ -110,6 +112,28 @@ char	*ft_rest(char *buffer)
 	}
 	
 }
+char	*ft_createbuffer(char *buffer)
+{
+	while (buffer[i])
+	{
+		newbuffer[i] = buffer[i];
+		i++;
+	}
+	newbuffer[ft_strlen(buffer)] = '\0';
+}
+char	*ft_createnew(char *new)
+{
+	char	*newbuffer;
+	int		i;
+	int		j;
+
+	while (new[j] != '\0')
+	{
+		newbuffer[i + j] = new[j];
+		j++;
+	}
+	return (newbuffer);
+}
 
 char	*ft_join(char *buffer, char *new)
 {
@@ -118,29 +142,19 @@ char	*ft_join(char *buffer, char *new)
 	int		j;
 
 	i = 0;
+	if (new == 0)
+		return(NULL);
 	newbuffer = malloc((ft_strlen(buffer) + ft_strlen(new) + 1) * sizeof(char));
 	if (!newbuffer)
 		return (NULL);
 	if (buffer)
-	{
-		while (buffer[i])
-		{
-			newbuffer[i] = buffer[i];
-			i++;
-		}
-	}
+		ft_createbuffer(buffer);
 	j = 0;
 	if (new)
-	{
-		while (new[j] != '\0')
-		{
-			newbuffer[i + j] = new[j];
-			j++;
-		}
-	}
+		ft_createnew(new);
+	newbuffer[i + j] = '\0';
 	free(buffer);
 	free(new);
-	newbuffer[i + j] = '\0';
 	return (newbuffer);
 }
 char	*get_next_line(int fd)
@@ -151,7 +165,12 @@ char	*get_next_line(int fd)
 
 	
 	buffer = ft_join(buffer, ft_read(fd));
-	if (ft_strlen(buffer) > BUFFER_SIZE)
+	if (buffer == NULL)
+	{
+		free(buffer);
+		return (NULL);
+	}
+	if (ft_strlen(buffer) >= BUFFER_SIZE)
 	{
 		while (ft_check(buffer) == 0)
 		{
