@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/05 12:40:30 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:20:55 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	ft_check(char *buffer)
 	int	i;
 
 	i = 0;
+	if (!buffer)
+		return(0);
 	while (buffer[i] != '\0')
 	{
 		if (buffer[i] == '\n')
@@ -57,7 +59,6 @@ char	*ft_createline(char *buffer)
 	int		i;
 	char	*line;
 
-	
 	i = 0;
 	while (buffer[i] != '\n')
 		i++;
@@ -71,18 +72,32 @@ char	*ft_createline(char *buffer)
 	line[i] = '\0';
 	return (line);
 }
+
+char	*ft_lastline(buffer)
+{
+	char	*temp;
+	int		i;
+
+	i = 0;
+	while (buffer[i] != '\0')
+	i++;
+	
+}
+
 char	*ft_read(int fd)
 {
 	char	*buffer;
 	int		element;
 
-	buffer = malloc(BUFFER_SIZE * sizeof(char));
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if	(!buffer)
 		return (NULL);
 	element = read(fd, buffer, BUFFER_SIZE);
-	if (element == 0)
-		return (0);
 	buffer[element] = '\0';
+	if (element < BUFFER_SIZE && element >= 0)
+	{
+		ft_lastline(buffer);
+	}
 	return (buffer);
 }
 
@@ -114,17 +129,17 @@ char	*ft_rest(char *buffer)
 	
 }
 
-char	*ft_createnew(char *new)
+char	*ft_createnew(char *new, int i, char *newbuffer, char *buffer)
 {
-	char	*newbuffer;
-	int		i;
 	int		j;
 
+    j = 0;
 	while (new[j] != '\0')
 	{
 		newbuffer[i + j] = new[j];
 		j++;
 	}
+    newbuffer[i + j] = '\0';
 	return (newbuffer);
 }
 
@@ -141,18 +156,17 @@ char	*ft_join(char *buffer, char *new)
 	if (!newbuffer)
 		return (NULL);
 	if (buffer)
-		while (buffer[i])
-	{
-		newbuffer[i] = buffer[i];
-		i++;
-	}
+		while (buffer[i] != '\0')
+		{
+			newbuffer[i] = buffer[i];
+			i++;
+		}
 	newbuffer[ft_strlen(buffer)] = '\0';
-	j = 0;
 	if (new)
-		ft_createnew(new);
-	newbuffer[i + j] = '\0';
+		newbuffer = ft_createnew(new, i, newbuffer, buffer);
 	free(buffer);
-	return (free(new), newbuffer);
+    free(new);
+	return (newbuffer);
 }
 char	*get_next_line(int fd)
 {
@@ -160,21 +174,17 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*temp;
 
-	
 	buffer = ft_join(buffer, ft_read(fd));
-	if (buffer == NULL)
-		return (free(buffer), NULL);
-	if (ft_strlen(buffer) >= BUFFER_SIZE)
+	if (buffer != 0)
 	{
 		while (ft_check(buffer) == 0)
-		{
 			buffer = ft_join(buffer, ft_read(fd));
-		}
 		if (ft_check(buffer) == 1)
 		{
 			line = ft_createline(buffer);
 			temp = ft_rest(buffer);
-			return (buffer = temp, line);	
+			buffer = temp;
+			return (line);
 		}
 	}
 	else
