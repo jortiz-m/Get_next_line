@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:52:27 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/10 11:49:43 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:26:21 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-# 	define BUFFER_SIZE 4
-#endif
+#  define BUFFER_SIZE 4
+# endif
 
 # include <unistd.h>
 # include <stdio.h>

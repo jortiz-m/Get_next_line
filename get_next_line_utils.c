@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:54:07 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/10 11:49:44 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:25:40 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_strlen(char *str)
 
 	if (!str)
 		return (0);
-	c = 0;	
+	c = 0;
 	while (str[c] != '\0')
 		c++;
 	return (c);
@@ -35,8 +35,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	str = (char *)malloc ((lends3 + 1) * sizeof(char));
 	i = 0;
 	j = 0;
-	if (!s1 || !s2)
-		return (NULL);
 	if (!str)
 		return (NULL);
 	while (s1[i] != '\0')
@@ -51,6 +49,15 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	str[(i + j)] = '\0';
 	return (str);
+}
+
+char	*ft_free(char *buffer, char *buf)
+{
+	char	*temp;
+
+	temp = ft_strjoin(buffer, buf);
+	free(buffer);
+	return (temp);
 }
 
 char	*ft_strchr(char *str, int chr)
@@ -72,7 +79,7 @@ char	*ft_strchr(char *str, int chr)
 void	*ft_calloc(int count, int size)
 {
 	char	*str;
-	int	i;
+	int		i;
 
 	str = (malloc(count * size));
 	i = 0;
