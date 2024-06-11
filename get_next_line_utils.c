@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:54:07 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/11 09:51:53 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:03:36 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,21 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	str[(i + j)] = '\0';
+	free (s1);
 	return (str);
 }
 
-char	*ft_free(char *rest, char *buffer)
-{
-	char	*temp;
-
-	temp = ft_strjoin(rest, buffer);
-	free(rest);
-	return (temp);
-}
-
-char	*ft_strchr(char *str, int chr)
+char	*ft_strchr(char *buffer, int c)
 {
 	int	i;
 
 	i = 0;
-	if ((char)chr == '\0')
-		return ((char *)(str + ft_strlen(str)));
-	while (str[i] != '\0')
+	if ((char)c == '\0')
+		return ((char *)(buffer + ft_strlen(buffer)));
+	while (buffer[i] != '\0')
 	{
-		if (str[i] == (char)chr)
-			return ((char *)(str + i));
+		if (buffer[i] == (char)c)
+			return ((char *)(buffer + i));
 		i++;
 	}
 	return (NULL);

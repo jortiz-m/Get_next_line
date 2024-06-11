@@ -6,15 +6,15 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 10:51:44 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/11 11:10:28 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:57:57 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 char	*ft_createrest(char *buffer)
 {
-	char	*line;
+	char	*rest;
 	int		i;
 	int		j;
 
@@ -26,17 +26,17 @@ char	*ft_createrest(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	line = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
+	rest = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
 	i++;
 	j = 0;
 	while (buffer[i])
 	{
-		line[j] = buffer[i];
+		rest[j] = buffer[i];
 		i++;
 		j++;
 	}
 	free(buffer);
-	return (line);
+	return (rest);
 }
 
 char	*ft_createline(char *buffer)
@@ -83,7 +83,7 @@ char	*ft_read(int fd, char *rest)
 			return (NULL);
 		}
 		buffer[bytes_read] = '\0';
-		rest = ft_free(rest, buffer);
+		rest = ft_strjoin(rest, buffer);
 		if (ft_strchr (buffer, '\n'))
 			break ;
 	}
@@ -93,7 +93,7 @@ char	*ft_read(int fd, char *rest)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[SIZE];
+	static char	*buffer[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -101,11 +101,24 @@ char	*get_next_line(int fd)
 	buffer[fd] = ft_read(fd, buffer[fd]);
 	if (!buffer[fd])
 	{
-		free(buffer);
-		buffer = NULL;
+		free(buffer[fd]);
 		return (NULL);
 	}
 	line = ft_createline(buffer[fd]);
 	buffer[fd] = ft_createrest(buffer[fd]);
 	return (line);
+}
+
+#include <stdio.h>
+
+int main(void)
+{
+	int fd = open("texto.txt", O_RDONLY);
+	int fd2 = open("texto2.txt", O_RDONLY);
+
+	printf("%s\n", get_next_line(fd));
+	printf("%s", get_next_line(fd2));
+	close(fd);
+	close(fd2);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/11 10:55:16 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:31:43 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_createrest(char *buffer)
 {
-	char	*line;
+	char	*rest;
 	int		i;
 	int		j;
 
@@ -26,17 +26,17 @@ char	*ft_createrest(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	line = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
+	rest = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
 	i++;
 	j = 0;
 	while (buffer[i])
 	{
-		line[j] = buffer[i];
+		rest[j] = buffer[i];
 		i++;
 		j++;
 	}
 	free(buffer);
-	return (line);
+	return (rest);
 }
 
 char	*ft_createline(char *buffer)
@@ -83,7 +83,7 @@ char	*ft_read(int fd, char *rest)
 			return (NULL);
 		}
 		buffer[bytes_read] = '\0';
-		rest = ft_free(rest, buffer);
+		rest = ft_strjoin(rest, buffer);
 		if (ft_strchr (buffer, '\n'))
 			break ;
 	}
@@ -109,7 +109,7 @@ char	*get_next_line(int fd)
 	buffer = ft_createrest(buffer);
 	return (line);
 }
-/*
+
 int	main(void)
 {
 	int		fd;
@@ -123,4 +123,4 @@ int	main(void)
 	}
 	close(fd);
 	return (0);
-}*/
+}

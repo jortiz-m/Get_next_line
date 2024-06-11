@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:52:27 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/11 09:11:18 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:28:02 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # endif
 
 # include <unistd.h>
-# include <stdio.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -27,10 +26,9 @@ char	*get_next_line(int fd);
 char	*ft_read(int fd, char *rest);
 char	*ft_createline(char *buffer);
 char	*ft_createrest(char *buffer);
-char	*ft_free(char *rest, char *buffer);
-void	*ft_calloc(int count, int size);
 int		ft_strlen(char *str);
-char	*ft_strchr(char *str, int chr);
 char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strchr(char *str, int chr);
+void	*ft_calloc(int count, int size);
 
 #endif

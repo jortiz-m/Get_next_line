@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 11:00:25 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/11 11:01:50 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:28:16 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@
 #  define BUFFER_SIZE 4
 # endif
 
-# include <limits.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <sys/uio.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
 char	*get_next_line(int fd);
-
+char	*ft_read(int fd, char *rest);
+char	*ft_createline(char *buffer);
+char	*ft_createrest(char *buffer);
+int		ft_strlen(char *str);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strchr(char *str, int chr);
+void	*ft_calloc(int count, int size);
 #endif
