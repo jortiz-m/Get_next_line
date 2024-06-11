@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:54:07 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/10 13:25:40 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/11 09:51:53 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	ft_strlen(char *str)
 {
-	int	c;
+	int	i;
 
 	if (!str)
 		return (0);
-	c = 0;
-	while (str[c] != '\0')
-		c++;
-	return (c);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -29,14 +29,15 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*str;
 	int		i;
 	int		j;
-	char	lends3;
 
-	lends3 = (ft_strlen(s1) + ft_strlen(s2));
-	str = (char *)malloc ((lends3 + 1) * sizeof(char));
+	str = (char *)malloc (((ft_strlen(s1) + ft_strlen(s2)) + 1) * sizeof(char));
+	if (!str)
+	{
+		free(str);
+		return (NULL);
+	}
 	i = 0;
 	j = 0;
-	if (!str)
-		return (NULL);
 	while (s1[i] != '\0')
 	{
 		str[i] = s1[i];
@@ -51,12 +52,12 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-char	*ft_free(char *buffer, char *buf)
+char	*ft_free(char *rest, char *buffer)
 {
 	char	*temp;
 
-	temp = ft_strjoin(buffer, buf);
-	free(buffer);
+	temp = ft_strjoin(rest, buffer);
+	free(rest);
 	return (temp);
 }
 
@@ -82,9 +83,12 @@ void	*ft_calloc(int count, int size)
 	int		i;
 
 	str = (malloc(count * size));
-	i = 0;
-	if (str == NULL)
+	if (!str)
+	{
+		free(str);
 		return (NULL);
+	}
+	i = 0;
 	while (i < (count * size))
 	{
 		str[i] = 0;

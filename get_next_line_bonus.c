@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/11 10:55:16 by jortiz-m         ###   ########.fr       */
+/*   Created: 2024/06/11 10:51:44 by jortiz-m          #+#    #+#             */
+/*   Updated: 2024/06/11 11:10:28 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_createrest(char *buffer)
 {
@@ -93,34 +93,19 @@ char	*ft_read(int fd, char *rest)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[SIZE];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	buffer = ft_read(fd, buffer);
-	if (!buffer || ft_strlen(buffer) < 1)
+	buffer[fd] = ft_read(fd, buffer[fd]);
+	if (!buffer[fd])
 	{
 		free(buffer);
 		buffer = NULL;
 		return (NULL);
 	}
-	line = ft_createline(buffer);
-	buffer = ft_createrest(buffer);
+	line = ft_createline(buffer[fd]);
+	buffer[fd] = ft_createrest(buffer[fd]);
 	return (line);
 }
-/*
-int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open("caca.txt", O_RDONLY);
-	while (line = get_next_line(fd))
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
-}*/
