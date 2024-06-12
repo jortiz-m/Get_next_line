@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:30:46 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/11 12:31:43 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:59:15 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,19 +108,4 @@ char	*get_next_line(int fd)
 	line = ft_createline(buffer);
 	buffer = ft_createrest(buffer);
 	return (line);
-}
-
-int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open("caca.txt", O_RDONLY);
-	while (line = get_next_line(fd))
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
 }

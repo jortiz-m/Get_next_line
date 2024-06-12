@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 11:00:25 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/11 12:28:16 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:48:54 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4
+#  define BUFFER_SIZE 1
 # endif
 
 # include <unistd.h>
@@ -28,6 +28,7 @@ char	*ft_createline(char *buffer);
 char	*ft_createrest(char *buffer);
 int		ft_strlen(char *str);
 char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strchr(char *str, int chr);
+char	*ft_strchr(char *buffer, int c);
 void	*ft_calloc(int count, int size);
+
 #endif

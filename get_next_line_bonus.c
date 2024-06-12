@@ -6,7 +6,7 @@
 /*   By: jortiz-m <jortiz-m@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 10:51:44 by jortiz-m          #+#    #+#             */
-/*   Updated: 2024/06/11 12:57:57 by jortiz-m         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:57:55 by jortiz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,4 @@ char	*get_next_line(int fd)
 	line = ft_createline(buffer[fd]);
 	buffer[fd] = ft_createrest(buffer[fd]);
 	return (line);
-}
-
-#include <stdio.h>
-
-int main(void)
-{
-	int fd = open("texto.txt", O_RDONLY);
-	int fd2 = open("texto2.txt", O_RDONLY);
-
-	printf("%s\n", get_next_line(fd));
-	printf("%s", get_next_line(fd2));
-	close(fd);
-	close(fd2);
-	return (0);
 }
